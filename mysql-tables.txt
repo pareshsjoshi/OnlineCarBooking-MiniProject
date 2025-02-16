@@ -1,0 +1,56 @@
+create table users(
+id int auto_increment primary key,
+username varchar(10) not null unique,
+first_name varchar(20) not null,
+last_name varchar(20) not null,
+email_id varchar(25)not null unique,
+password varchar(25) not null,
+birth_date date not null,
+mobile_number int(10) not null,
+created_at timestamp default current_timestamp,
+updated_at timestamp default current_timestamp on update current_timestamp
+);
+
+create table bookings(
+booking_no varchar(5) primary key,
+first_name varchar(20) not null,
+last_name varchar(20) not null,
+location varchar(50) not null,
+city varchar(15) not null,
+state varchar(15) not null,
+pincode int(6) not null,
+booking_date date not null,
+driver_option varchar(10) not null,
+agreement boolean not null,
+created_at timestamp default current_timestamp,
+updated_at timestamp default current_timestamp on update current_timestamp
+);
+
+ALTER TABLE bookings
+MODIFY COLUMN booking_no INT AUTO_INCREMENT;
+
+create view display_bookings
+as
+select booking_no, concat(concat(first_name, ' '), last_name) as name,
+concat(concat(concat(concat(concat(concat(location, ' '), city), ' '), state), ' '), pincode) as address,
+booking_date, driver_option;
+
+CREATE VIEW display_bookings AS
+SELECT 
+    booking_no,
+    CONCAT(first_name, ' ', last_name) AS name,
+    CONCAT(location, ' ', city, ' ', state, ' ', pincode) AS address,
+    booking_date,
+    driver_option
+FROM bookings;
+
+create table tasks(
+id int auto_increment primary key,
+title varchar(20) not null,
+priority varchar(10) not null,
+state varchar(10) not null,
+due_date date not null,
+description varchar(15) not null,
+created_at timestamp default current_timestamp,
+updated_at timestamp default current_timestamp on update current_timestamp
+);

@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" id="main" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ's</title>
+    <link href="bootstrap-5.3.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .nav-item {
+            text-align: center;
+            padding: 0rem 0.5rem;
+            transition: 0.7s;
+        }
+
+        .nav-link:hover {
+            border: hidden;
+            border-radius: 1.5rem;
+            background-color: rgb(18, 188, 255);
+            color: black;
+            transform: scaleX(2rem);
+        }
+
+        .toggle-theme {
+            display: inline-block;
+        }
+
+        .login-modal-form-li,
+        .frg-psw-modal-form-li,
+        .signup-modal-form-li {
+            list-style: none;
+        }
+
+        .login-modal-form-item,
+        .frg-psw-modal-form-item,
+        .signup-modal-form-item {
+            margin: 1rem 0rem;
+        }
+
+        .form-item-label {
+            width: 40%;
+            justify-content: left;
+        }
+
+        .form-item-input {
+            width: 60;
+            justify-content: right;
+            text-align: center;
+        }
+
+        .carousel-item {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .modal-dialog {
+            vertical-align: middle;
+            transition: transform .3s ease-out;
+        }
+
+        /* .carousel-caption {
+            background: rgb(0,0,0,0.1);
+        } */
+        .carousel-caption-text {
+            color: white;
+            text-shadow: 0rem 0rem 0.3rem black;
+        }
+
+        .carousel-control-icon:hover {
+            background: rgb(255, 255, 255, 0.1);
+        }
+
+        .b-example-divider {
+            width: 100%;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .footer-box {
+            box-shadow: 0rem -0.5rem 0.5rem rgba(0, 0, 0, 0.26);
+            border-start-end-radius: 2rem;
+            border-start-start-radius: 2rem;
+        }
+
+        .faq {
+            padding: 2rem 0rem;
+        }
+    </style>
+    <script src="bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+    <header class="sticky-top">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="main.html">
+                    <img src="imgs/Final/logo.png" alt="...">
+                </a>
+                <div class="adjust-right">
+                    <div class="toggle-theme">
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <img src="imgs/Theme/dark-mode.png" id="theme-icon" alt="..." width="30px"
+                                        height="30px">
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><button type="button" class="dropdown-item"
+                                            onclick="toggleTheme('light')">Light</button></li>
+                                    <li><button type="button" class="dropdown-item"
+                                            onclick="toggleTheme('dark')">Dark</button>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <div class="navbar-collapse justify-content-end">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="main.html">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pricing.html">Pricing</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="faq.html">FAQ's</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="contact-us.html">Contact Us</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="navbar-collapse justify-content-end">
+                        <ul class="navbar-nav" ng-if="!isLogedIn">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#loginModal">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#signupModal">Sign-Up/Register</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav" ng-if="isLogedIn">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Book a
+                                    Car</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <img src="imgs/Profile/user_img.jpg" id="theme-icon" alt="..." width="30px"
+                                        height="30px">
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#" class="dropdown-item">Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="mybookings.html" class="dropdown-item">My Bookings</a>
+                                    </li>
+                                    <li>
+                                        <a href="main.html" class="dropdown-item">Sign Out</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class="modal-section">
+        <!-- Login Modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="loginModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <ul class="login-modal-form-li">
+                                <li class="login-modal-form-item">
+                                    <label for="login-modal-username" class="form-item-label">Username</label>
+                                    <input type="text" name="username" id="login-modal-username"
+                                        class="form-item-input">
+                                </li>
+                                <li class="login-modal-form-item">
+                                    <label for="login-modal-pass" class="form-item-label">Password</label>
+                                    <input type="password" name="password" id="login-modal-pass"
+                                        class="form-item-input">
+                                </li>
+                                <li class="login-modal-form-item jastify-content-right">
+                                    <a href="" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal"
+                                        data-bs-target="#forgotPassModal">Forgot Password?</a>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary"
+                            ng-click="isLoggedIn = !isLoggedIn">Proceed</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Forgot Password Modal -->
+        <div class="modal fade" id="forgotPassModal" tabindex="-1" aria-labelledby="forgotPassModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="forgotPassModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <ul class="frg-psw-modal-form-li">
+                                <li class="frg-psw-modal-form-item">
+                                    <label for="frg-psw-modal-username" class="form-item-label">Username</label>
+                                    <input type="text" name="username" id="frg-psw-modal-username"
+                                        class="form-item-input">
+                                </li>
+                                <li class="frg-psw-modal-form-item">
+                                    <label for="frg-psw-modal-pass" class="form-item-label">Password</label>
+                                    <input type="password" name="password" id="frg-psw-modal-pass"
+                                        class="form-item-input">
+                                </li>
+                                <li class="frg-psw-modal-form-item">
+                                    <label for="frg-psw-modal-pass" class="form-item-label"> Confirm Password</label>
+                                    <input type="password" name="cn-password" id="frg-psw-modal-cn-pass"
+                                        class="form-item-input">
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary"
+                            ng-click="isLoggedIn = !isLoggedIn">Proceed</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SignUp Modal -->
+        <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="signupModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <ul class="signup-modal-form-li">
+                                <li class="signup-modal-form-item">
+                                    <label for="signup-modal-username" class="form-item-label">Username</label>
+                                    <input type="text" name="username" id="signup-modal-username"
+                                        class="form-item-input">
+                                </li>
+                                <li class="signup-modal-form-item">
+                                    <label for="signup-modal-username" class="form-item-label">Email ID</label>
+                                    <input type="text" name="email" id="signup-modal-mail" class="form-item-input">
+                                </li>
+                                <li class="signup-modal-form-item">
+                                    <label for="signup-modal-pass" class="form-item-label">Password</label>
+                                    <input type="password" name="password" id="signup-modal-pass"
+                                        class="form-item-input">
+                                </li>
+                                <li class="signup-modal-form-item">
+                                    <label for="signup-modal-cn-pass" class="form-item-label"> Confirm Password</label>
+                                    <input type="password" name="cn-password" id="signup-modal-cn-pass"
+                                        class="form-item-input">
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary"
+                            ng-click="isLoggedIn = !isLoggedIn">Proceed</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <main>
+        <div class="faq models bg_white">
+            <div class="container">
+                <div class="heading">
+                    <h1><span>FAQ’s</span></h1>
+                </div>
+                <div class="cmn-details mt-4">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div>
+                                <div class="accordion" id="accordionExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingOne"><button
+                                                class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                                                aria-expanded="false" aria-controls="collapseOne">RESERVATION</button>
+                                        </h2>
+                                        <div id="collapseOne" class="accordion-collapse collapse"
+                                            aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body faq_full_item_body demo_faq">
+                                                <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 padding-o">
+                                                    <strong>HOW DO I BOOK A CAR OF ORIX?</strong>
+                                                    <p>You can access our website and provide the requested information
+                                                        along with your credit card details. You can also register
+                                                        yourself on our Website/Mobile App. It is mandatory to update
+                                                        your documents (valid driving license, PAN, address proof, and
+                                                        credit card details/payment details) to make a reservation or at
+                                                        the time of registration.</p><strong>WHAT ALL INFORMATION IS
+                                                        REQUIRED FROM ME TO BOOK A CAR?</strong>
+                                                    <p></p>
+                                                    <p>You will need to enter:</p>
+                                                    <ul>
+                                                        <li>your name</li>
+                                                        <li>mobile number</li>
+                                                        <li>valid email address</li>
+                                                        <li>a valid driving license, in case you are driving. I If
+                                                            vehicle is to be driven by some other person, then his/her
+                                                            driving license is required.</li>
+                                                        <li>PAN</li>
+                                                        <li>Address proof – Aadhar, utility bill, passport etc.</li>
+                                                        <li>Your credit card details in case you are using your credit
+                                                            card for making the payment. If someone else is making the
+                                                            payment, enter the details of the credit card holder.</li>
+                                                    </ul>
+                                                    <p><strong>CAN SOMEONE ELSE MAKE A RESERVATION FOR ME?</strong></p>
+                                                    <p>Yes, but you need to be present with the required documents to
+                                                        pick up the car at the mentioned pickup location.</p><strong>CAN
+                                                        SOMEONE ELSE DRIVE FOR ME DURING MY RESERVATION?</strong>
+                                                    <p>Only the person whose KYC documents along with driving license
+                                                        are submitted while making the reservation can drive the
+                                                        vehicle.</p><strong>IS THERE A MINIMUM BOOKING CHARGE?</strong>
+                                                    <p>The Minimum Booking charge is for a period of 24 hour.</p>
+                                                    <strong>CAN I PREPONE MY TRIP?</strong>
+                                                    <p>If you want to take the car early, please reschedule your
+                                                        booking. The car is subject to availability.</p><strong>HOW MANY
+                                                        HOURS IN ADVANCE DO I NEED TO MAKE A RESERVATION?</strong>
+                                                    <p>You can book the car minimum 4 hours in advance, depending on the
+                                                        availability of the car.</p><strong>CAN I MODIFY MY
+                                                        RESERVATION?</strong>
+                                                    <p>Any booking modification requests have to be request for a
+                                                        minimum of 4 hours prior to the rental start time. Requests
+                                                        pertaining to car type and rental start &amp; end times will be
+                                                        serviced subject to availability. Request for switching between
+                                                        120 Kilometre and Unlimited Kilometre packages will not be
+                                                        entertained once the rental has commenced.</p><strong>CAN I
+                                                        EXTEND MY RESERVATION?</strong>
+                                                    <p>Extension requests have to be made along with the extension
+                                                        details, a minimum of 4 hours prior to the return time by email
+                                                        on selfdrive@orixindia.com. You can also call us on our helpline
+                                                        number- +91 95 1234 1234. The extension is possible subject to
+                                                        availability of the vehicle. In case of non-availability of the
+                                                        car, a charge of INR 300 over and above the hourly rate (as per
+                                                        your car type) will be charged as extension/modification
+                                                        charges.</p>
+                                                    <p>In case of Subscription, the extension for the subsequent month
+                                                        (if applicable) has to be informed in written to email ID
+                                                        selfdrive@orixindia.com at least 7 days in advance before the
+                                                        expiry of Subscription. In case Hirer fails to do so, we will
+                                                        consider the extension as a new booking/subscription</p>
+                                                    <p>A charge of INR 300 over and above the hourly rate (as per your
+                                                        car type) for every hour of delay will be charged as delay
+                                                        charges.</p><strong>DO I GET ANY BENEFIT OR CONCESSION IF I
+                                                        RETURN THE CAR EARLIER THAN MY SPECIFIED RETURN TIME?</strong>
+                                                    <p>We regret to say that but we do not offer any discounts for early
+                                                        return of the Car Rental.</p><strong>WHAT IS YOUR CANCELLATION
+                                                        POLICY?</strong>
+                                                    <p>The Hirer can cancel the booking by logging into his/her MyChoize
+                                                        account through the MyChoize website/mobile application. The
+                                                        Hirer may send in the details of the booking he/she is willing
+                                                        to cancel by email on
+                                                        &nbsp;<strong>carrentals@orixindia.com</strong>&nbsp; or call us
+                                                        on &nbsp;<strong>+91 95 1234 1234</strong>.</p>
+                                                    <p><strong>For daily rentals i.e. rental period of more than 24
+                                                            hours:</strong>&nbsp;If the booking is cancelled more than
+                                                        or equal to 24 hours prior to the scheduled pick up time, a
+                                                        transaction processing fees of Rs. 500/- will be levied; If the
+                                                        booking is cancelled less than 24 hours prior to the scheduled
+                                                        pickup time, cancellation charges levied will be the first days
+                                                        rental less discount proportioned across the entire rental
+                                                        duration.</p>
+                                                    <p><strong>For hourly rentals ie. rental period of less than 24
+                                                            hours:</strong>&nbsp;If the booking is cancelled more than
+                                                        or equal to 24 hours prior to the scheduled pick up time, a
+                                                        transaction processing fees of Rs.500/- will be levied. If the
+                                                        booking is cancelled less than 24 hours prior to the scheduled
+                                                        pick up time, the entire rental amount will be forfeited.</p>
+                                                    <p><strong>For Subscription bookings,</strong>&nbsp;if the booking
+                                                        is cancelled before 24 hours of trip start time, transaction
+                                                        fees of INR 500 will be deducted. If the booking is cancelled
+                                                        within 24 hours of trip start time, cancellation charges levied
+                                                        will be the first days rental less discount proportioned across
+                                                        the entire rental duration.</p>
+                                                    <p>If the Hirer, wishes to cancel the Subscription post the trip
+                                                        start time, the entire Security Deposit will be forfeited. In
+                                                        addition to this, pro-rated rental for the period of utilization
+                                                        will be charged.</p>
+                                                    <p>GST@ 28% will be applicable on all of the above mentioned
+                                                        cancellation charges.</p>
+                                                    <p>In case the hirer fails to pick up the car as per the scheduled
+                                                        rental start time without informing the MyChoize team about the
+                                                        same, the incident will be treated as a No-Show resulting in the
+                                                        forfeiture of the complete security deposit along with one day
+                                                        hire charges.</p>
+                                                    <p>The cancellation charges will be adjusted from the rental charges
+                                                        and the security deposit paid by the hirer. The remaining of the
+                                                        total amount paid shall be refunded post necessary adjustments
+                                                        within 7-10-working days after cancellation of the booking.</p>
+                                                    <strong>WHAT IF I DO NOT RECEIVE MY SELF DRIVE CAR ON MY SCHEDULE
+                                                        REPORTING TIME?</strong>
+                                                    <p>Please call our helpline number 95 1234 1234 and we will assist
+                                                        you.</p><strong>WHERE IN INDIA CAN I TRAVEL?</strong>
+                                                    <p>Our cars have an ALL India Permit, so you can drive anywhere in
+                                                        India. (Please avoid bad terrains and terrorism-affected areas)
+                                                    </p><strong>CAN I DROP THE CAR TO ANY OTHER LOCATION THAN THE PICKUP
+                                                        LOCATION?</strong>
+                                                    <p>1. You must bring the vehicle back to the same place you picked
+                                                        it up from. In case you drop off the car to any other location
+                                                        within the same city of pickup, and you had not mentioned the
+                                                        location beforehand while booking the car, then you will be
+                                                        charged INR 1500, plus the complete hourly rate and the late
+                                                        fees until the vehicle is returned to the correct location.</p>
+                                                    <p>2. In case the vehicle is dropped outside city limits of the
+                                                        pickup location, the actual cost for transporting the car to the
+                                                        correct location will be charged along with INR 1500, plus the
+                                                        complete hourly rate and the late fees until the vehicle is
+                                                        returned to the correct location.</p><strong>DO YOU HAVE A 24 *
+                                                        7 RESERVATION AT ALL YOUR LOCATIONS?</strong>
+                                                    <p>You may book the vehicle at any time of the day either through
+                                                        the website or our contact center. You can pick up/drop off the
+                                                        vehicle at any time from one of our own/virtual locations.
+                                                        However, we do not provide destination pickup/drop off between
+                                                        23:00 hours to 06:30 hours.</p><strong>CAN I TAKE A PET ALONG
+                                                        WITH ME?</strong>
+                                                    <p>Some of our guests might be allergic to pets and hence pets will
+                                                        not be allowed in the car. A charge of INR 750 will be levied as
+                                                        penalty if you bring the pets in the car.</p><strong>HOW DO I
+                                                        END MY RESERVATION?</strong>
+                                                    <p>You will need to return the car with a full tank. ORIX executive
+                                                        will help you complete the post usage checklist and complete the
+                                                        payment process.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingTwo"><button
+                                                class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                                aria-expanded="false" aria-controls="collapseTwo">DOCUMENTATION</button>
+                                        </h2>
+                                        <div id="collapseTwo" class="accordion-collapse collapse"
+                                            aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body faq_full_item_body demo_faq">
+                                                <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 padding-o">
+                                                    <strong>IS THERE AN AGREEMENT/DOCUMENT THAT I NEED TO SIGN?</strong>
+                                                    <p>Yes, you will need to sign a short agreement / car checklist when
+                                                        you come to pick up the car.</p><strong>WHAT IS THE ELIGIBILITY
+                                                        TO HIRE A SELF DRIVE CAR?</strong>
+                                                    <p>The Hirer intending to enter into this Agreement and rent the
+                                                        vehicle on self-drive basis should have completed 21 years of
+                                                        age, shall having a driving experience of a minimum 1 year LMV,
+                                                        and shall submit a valid &amp; Original driving license, PAN
+                                                        Card &amp; Aadhar Card.</p><strong>WHAT TYPE OF DRIVER’S LICENSE
+                                                        IS REQUIRED?</strong>
+                                                    <p>We require an Indian driver’s license or an International
+                                                        Driver’s Permit (IDP). Our office will verify original license.
+                                                        The licenses must be for a light motor vehicle (car). The
+                                                        customers do NOT need a specific cab license that is associated
+                                                        with a yellow board plate.</p><strong>WHAT DOCUMENTS DO I NEED
+                                                        TO PRODUCE WHILE PICKING UP A SELF DRIVE CAR?</strong>
+                                                    <p>You need to produce the KYC Documents comprising photo identity,
+                                                        an address proof (such as original Passport/Aadhar card) and a
+                                                        valid Driving License. A Copy of each needs to be submitted
+                                                        while picking up the car.</p><strong>WILL I BE ALLOWED TO USE A
+                                                        CAR IN CASE I FAIL TO PRODUCE THE ORIGINAL DOCUMENTS AT THE TIME
+                                                        OF PICKUP??</strong>
+                                                    <p>No. You will not be allowed to rent the vehicle in case you fail
+                                                        to produce the original documents at the time of scheduled
+                                                        vehicle pickup. Besides, we reserve the right to forfeit 100% of
+                                                        your rental amount in such a scenario.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingThree"><button
+                                                class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                                aria-expanded="false" aria-controls="collapseThree">OPERATIONS</button>
+                                        </h2>
+                                        <div id="collapseThree" class="accordion-collapse collapse"
+                                            aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body faq_full_item_body demo_faq">
+                                                <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 padding-o">
+                                                    <strong>WHEN DOES MY BOOKING START?</strong>
+                                                    <p>The booking start time will be the same as selected by you at the
+                                                        time of making the booking.</p><strong>IN CASE OF 120 KILOMETRE
+                                                        PACKAGE, WHERE DOES THE KILOMETRE COUNT BEGIN FROM AND END
+                                                        AT?</strong>
+                                                    <p>In case of 120 km package, the kilometre count shall begin from
+                                                        your point of car pickup and ends at your point of car drop off.
+                                                        That is, the actual km driven by you will be considered for the
+                                                        usage calculation.</p><strong>WHAT TYPE OF CARS DOES MyChoize
+                                                        OFFER?</strong>
+                                                    <p>We offer hatch backs / Sedan / SUVs / MUVs / Luxury Cars (Refer
+                                                        website for further details)</p><strong>WHAT DO I NEED TO CHECK
+                                                        BEFORE I TAKE THE CAR ON SELF DRIVE?</strong>
+                                                    <p>We would advise you to physically inspect the car and sign the
+                                                        checklist.</p><strong>DOES THE VEHICLE HAVE MANUAL OR AUTOMATIC
+                                                        TRANSMISSION?</strong>
+                                                    <p>You may check the vehicle’s specifications for these details at
+                                                        the time of booking.</p><strong>WHAT ARE THE AMENITIES YOU
+                                                        PROVIDE WITH YOUR CAR?</strong>
+                                                    <p>All cars may be equipped with manufacturer’s standard car
+                                                        accessories.</p><strong>WHAT IS THE MINIMUM TIME ONE CAN RENT
+                                                        THE CAR FOR?</strong>
+                                                    <p>You can hire it for a minimum of 24 hour.</p><strong>DO YOU HAVE
+                                                        A KILOMETRE LIMIT?</strong>
+                                                    <p>Kilometre allowance is dependent on the package chosen at the
+                                                        time of making the booking. Under 120 km package, maximum
+                                                        kilometre allowance is 120 km any usage beyond which will be
+                                                        chargeable on a per kilometre use basis. If you choose the
+                                                        ’Unlimited KMs’ package, there will be no limit on the
+                                                        kilometres you can drive during the tenure of the rental.</p>
+                                                    <strong>FOR A 120 KILOMETRE PACKAGE, HOW WILL I PAY FOR ANY
+                                                        ADDITIONAL KILOMETRES DRIVEN?</strong>
+                                                    <p>The additional kilometre usage charges will be deducted from your
+                                                        security deposit.</p><strong>WHAT IS THE SPEED LIMIT FOR DRIVING
+                                                        AN ORIX CAR?</strong>
+                                                    <p>ORIX allows its customers to drive the car up to a maximum speed
+                                                        of 120 km/hr. However, it is 80 km/hr. in few cities where some
+                                                        cars might be equipped with speed governors as per government
+                                                        directives. MyChoize advises you to follow local speed limits.
+                                                        Government fine for driving the vehicle at a speed above the
+                                                        local speed limit is payable by the customers.</p><strong>WHO
+                                                        PAYS FOR THE FUEL?</strong>
+                                                    <p>The Vehicle will be provided to the Hirer with fuel in tank. The
+                                                        Hirer shall verify and confirm the same at the time of taking
+                                                        possession of Vehicle before commencement of the Hire Period.
+                                                        The Hirer shall return the Vehicle with same quantity of fuel in
+                                                        tank. However, in case the quantity of fuel at the time of
+                                                        returning the vehicle to ORIX is less than the fuel level at the
+                                                        time of rental start date and time, a 10% refueling charge will
+                                                        be levied over and above the differential refueling cost along
+                                                        with service charge shall be deducted from the Security Deposit
+                                                        (SD)and/or any other credit balance or funds of the Hirer with
+                                                        ORIX or any person. In the event SD is exhausted, hirer shall
+                                                        pay the differential dues to ORIX through an additional payment
+                                                        link which ORIX will share with the Hirer. The decision of ORIX
+                                                        in this regard shall be final in determining the number of
+                                                        litres required to fill the fuel tank.</p><strong>WHO PAYS FOR
+                                                        PARKING/TOLL/STATE TAX?</strong>
+                                                    <p>The User of the Car Rental pays for the parking/toll and taxes.
+                                                    </p><strong>CAN I GET A CAR AT ANY LOCATION I DESIRE?</strong>
+                                                    <p>Yes, You may opt for doorstep pickup/drop off at the time of
+                                                        making the booking at an additional charge of Rs 300/- each for
+                                                        pickup and drop off. However, doorstep pickup/drop off service
+                                                        will not be available between 23:00 hours to 6:30 hours.</p>
+                                                    <strong>IS SMOKING ALLOWED IN CAR?</strong>
+                                                    <p>Smoking is strictly not allowed in MyChoize car</p><strong>DO I
+                                                        NEED TO CLEAN THE CAR?</strong>
+                                                    <p>Unclean cars will attract cleaning charge of INR 750 for a minor
+                                                        cleaning &amp; a charge of INR 1250 for a major cleaning as
+                                                        penalty.</p><strong>WHAT ABOUT ANY BELONGINGS LEFT IN THE CAR AT
+                                                        THE TIME OF HANDOVER?</strong>
+                                                    <p>MyChoize does not take the responsibility for any of your
+                                                        belongings. However, we suggest you to contact our call center
+                                                        and we will try our best to help you.</p><strong>WHAT ARE THE
+                                                        IMPORTANT DOCUMENTS I HAVE TO CARRY WHEN I HAVE TO DRIVE ACROSS
+                                                        STATE BORDER?</strong>
+                                                    <p>You will need to carry your driving license, Car registration
+                                                        documents, Self-Drive License, All India Permit, Car fitness
+                                                        certificate, Insurance Copy, and PUC (Pollution under Control
+                                                        Certificate).</p><strong>DOES MyChoize PROVIDE ROAD SIDE
+                                                        ASSISTANCE?</strong>
+                                                    <p>Yes, Mychoize does provide road side assistance in case of an
+                                                        accident or if the vehicle breaks down. You can call us on our
+                                                        helpline number +91 95 1234 1234, and we would arrange for road
+                                                        side assistance</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingfour"><button
+                                                class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapsefour"
+                                                aria-expanded="false" aria-controls="collapsefour">INCIDENTS</button>
+                                        </h2>
+                                        <div id="collapsefour" class="accordion-collapse collapse"
+                                            aria-labelledby="headingfour" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body faq_full_item_body demo_faq">
+                                                <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 padding-o">
+                                                    <strong>WHAT HAPPENS IN CASE OF AN ACCIDENT?</strong>
+                                                    <p>1. MyChoize requests you to immediately notify us (within 4
+                                                        hours) by calling on our helpline number +91 95 1234 1234 or by
+                                                        sending us an email on selfdrive@orixindia.com. We will
+                                                        coordinate accordingly with our road-side assistance provider.
+                                                    </p>
+                                                    <p>2.Please file an FIR at the nearest police station. Do not leave
+                                                        the scene of the accident until proper support has arrived. You
+                                                        may be required to sign several formality documents associated
+                                                        with the accident.</p><strong>WHAT HAPPENS IN CASE OF A BREAK
+                                                        DOWN?</strong>
+                                                    <p>MyChoize requests you to immediately notify us (within 4 hours)
+                                                        by calling on our helpline number +91 95 1234 1234 or by sending
+                                                        us an email on selfdrive@orixindia.com. Our 24X7 experienced
+                                                        technical team will assist you in case of break down and provide
+                                                        a replacement, if need.</p><strong>WHAT IS THE REPLACEMENT CAR
+                                                        POLICY?</strong>
+                                                    <p>Replacement car offer is available only for Subscription service.
+                                                        The replacement will be available only in the city of hire till
+                                                        the time the original car is at the garage/workshop. The
+                                                        replacement car will be offered in the same category of car that
+                                                        is hired, only in case of breakdown due to mechanical /
+                                                        electrical failure and/or scheduled service.</p>
+                                                    <p>No replacement car will be offered for major/minor accidents or
+                                                        cases arising due to hirer’s negligence.</p>
+                                                    <p>The replacement will be offered basis availability of the cars.
+                                                        ORIX reserves the right to deny replacement in case of
+                                                        non-availability of car in the same category.</p>
+                                                    <p>Periodic maintenance is included in the car rental. However,
+                                                        replacement of clutch assembly, tyres, any missing/broken items
+                                                        unless declared at the time of handover is not covered.</p>
+                                                    <p>Intentional damages/abuse to car will result into forfeiting of
+                                                        entire security deposit and rental advance, along with
+                                                        foreclosing of the subscription and repossessing of the car with
+                                                        immediate effect.</p><strong>WHAT HAPPENS IN CASE OF A
+                                                        DAMAGE?</strong>
+                                                    <p>Damage cost up to INR 6,000/- is to be paid by Hirer, and it will
+                                                        be deducted from the security deposit. In case damage is more
+                                                        than INR 6,000, an insurance claim will be filed; the amount of
+                                                        depreciation and parts which are not covered under insurance
+                                                        will be borne by the Hirer. In case the customer is found
+                                                        violating the terms &amp; conditions of ORIX, then the maximum
+                                                        cap of INR 6000 will not be applicable The assessment of damage
+                                                        made by ORIX will be final.</p><strong>WHAT HAPPENS IN CASE IF
+                                                        THE CAR IS STOLEN?</strong>
+                                                    <p>1.An FIR needs to be registered immediately (within 4 hours)
+                                                        &amp; the same needs to be informed to us by email at
+                                                        selfdrive@orixindia.com.</p>
+                                                    <p>2.In case of theft /total loss of the Vehicle during the Hire
+                                                        Period, the Hirer shall be liable to bear the damages as
+                                                        specified in the Agreement. The Security Deposit paid by the
+                                                        Hirer shall be adjusted against such loss and/or damage. Any
+                                                        theft in the Vehicle with respect to Vehicle parts and/or
+                                                        accessories shall be charged as per the Schedule of charges.</p>
+                                                    <strong>WHAT HAPPENS IN CASE THE CAR DAMAGE IS DUE TO
+                                                        NEGLIGENCE?</strong>
+                                                    <p>The Hirer shall be liable to pay charges as stipulated in the
+                                                        Schedule of Charges mentioned as part of the Agreement.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingfive"><button
+                                                class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapsefive"
+                                                aria-expanded="false" aria-controls="collapsefive">LEGAL</button></h2>
+                                        <div id="collapsefive" class="accordion-collapse collapse"
+                                            aria-labelledby="headingfive" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body faq_full_item_body demo_faq">
+                                                <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 padding-o">
+                                                    <p>WHAT IS THE INSURANCE COVER?</p>
+                                                    <p>Damage costs up to INR 6,000/- is to be paid by Hirer. In case
+                                                        the damage is more than INR 6,000, an insurance claim will be
+                                                        filed. The amount of depreciation and parts which are not
+                                                        covered under insurance will be borne by the Hirer.</p>
+                                                    <p>In case the customer is found to violate the ORIX terms &amp;
+                                                        conditions then the maximum cap of INR 6000 will not be
+                                                        applicable. The assessment of damage made by ORIX will be final.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingsix"><button
+                                                class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapsesix"
+                                                aria-expanded="false" aria-controls="collapsesix">PAYMENTS</button></h2>
+                                        <div id="collapsesix" class="accordion-collapse collapse"
+                                            aria-labelledby="headingsix" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body faq_full_item_body demo_faq">
+                                                <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 padding-o">
+                                                    <strong>WHAT MODE OF PAYMENTS ARE ACCEPTED?</strong>
+                                                    <p>ORIX accepts payments by credit cards (visa/master card), and net
+                                                        banking. All rental payments are made in advance through our
+                                                        website or mobile app. However, the Security Deposit should be
+                                                        paid before taking delivery of the car. We do not accept cash.
+                                                    </p><strong>ARE THERE ANY TAXES ON THE RENTAL AMOUNT?</strong>
+                                                    <p>Yes, GST will be applicable as per the state laws.</p><strong>ARE
+                                                        THERE ANY TAXES ON THE INCIDENTAL CHARGES ?</strong>
+                                                    <p>Any incidental charges to main services will be included in the
+                                                        value of taxable supply for the purpose of charge of GST. Toll,
+                                                        Parking, Challans etc. are incidental charges to the main
+                                                        activity of rent a cab and therefore it is chargeable to GST.
+                                                    </p>
+                                                    <p>Extract from The Central Goods and Services Tax Act, Section 15
+                                                        for reference. Value of taxable supply</p>15.<p>(1) The value of
+                                                        a supply of goods or services or both shall be the transaction
+                                                        value, which is the price actually paid or payable for the said
+                                                        supply of goods or services or both where the supplier and the
+                                                        recipient of the supply are not related and the price is the
+                                                        sole consideration for the supply.</p>
+                                                    <p>(2) The value of supply shall include___ (c) incidental expenses,
+                                                        including commission and packing, charged by the supplier to the
+                                                        recipient of a supply and any amount charged for anything done
+                                                        by the supplier in respect of the supply of goods or services or
+                                                        both at the time of: or before delivery of goods or supply of
+                                                        services</p><strong>IS SECURITY DEPOSIT DIFFERENT FOR DIFFERENT
+                                                        CAR MODEL?</strong>
+                                                    <p>Security deposit is INR 6000 for Monthly Subscriptions, for daily
+                                                        rentals it is INR 3000. It does not change with car type.</p>
+                                                    <strong>HOW WILL YOU REFUND MY SECURITY DEPOSIT?</strong>
+                                                    <p>We will refund your Security Deposit to the source of payment,
+                                                        which may be your credit card or bank, whichever you used at the
+                                                        time of booking.</p><strong>WHEN WILL I GET MY REFUND
+                                                        BACK?</strong>
+                                                    <p>We process your refund request on the same working day when you
+                                                        return the car. It usually takes 7-10 working days for your bank
+                                                        to credit the same into your account.</p><strong>WILL I GET A
+                                                        PHYSICAL BILL?</strong>
+                                                    <p>The copy of the invoice will be mailed to you on your registered
+                                                        e-mail ID.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingsevern"><button
+                                                class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapsesevern"
+                                                aria-expanded="false" aria-controls="collapsesevern">SCHEDULE OF
+                                                CHARGES</button></h2>
+                                        <div id="collapsesevern" class="accordion-collapse collapse"
+                                            aria-labelledby="headingsevern" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body faq_full_item_body demo_faq">
+                                                <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 padding-o">
+                                                    <strong>SCHEDULE OF CHARGES</strong>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered" cellspacing="{0}">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>SR.NO.</td>
+                                                                    <td>NON-COMPLIANCE</td>
+                                                                    <td>CHARGES</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>1</td>
+                                                                    <td>Driving at a speed above the maximum speed of 80
+                                                                        km/hr.</td>
+                                                                    <td>1st Instance &gt;= 80 km/hr. - INR 2500 + GOVT.
+                                                                        fines (if any) plus expulsion from MYCHOIZE if
+                                                                        it happens again in the next booking<br><br>2nd
+                                                                        Instance &gt;= 80km/hr. - INR 2500 + GOVT. fines
+                                                                        (if any) plus expulsion from MYCHOIZE<br>&gt;=
+                                                                        80 km/hr. - INR 2500 + GOVT. fines (if any) plus
+                                                                        expulsion from MYCHOIZE</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2</td>
+                                                                    <td>Traffic violation</td>
+                                                                    <td>INR 1000 in addition to the actual fine charged
+                                                                        due to traffic violation will be charged from
+                                                                        the User</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3</td>
+                                                                    <td>Car spare part changed</td>
+                                                                    <td>The User will be charged a penalty of INR 5000
+                                                                        over and above the cost of spare part.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>4</td>
+                                                                    <td>Tyre misuse</td>
+                                                                    <td>In case of any tyre damages resulting from
+                                                                        driving in bad terrain and continued driving in
+                                                                        case of tyre puncture, customers will be charged
+                                                                        for the cost of tyre on actuals</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>5</td>
+                                                                    <td>Performing any unauthorized activity such as
+                                                                        carrying arms and ammunition, any intoxication,
+                                                                        commercial activity</td>
+                                                                    <td>INR 5000 will be charged as penalty .The user
+                                                                        will be held liable for any legal action arising
+                                                                        out of these activities</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>6</td>
+                                                                    <td>External branding</td>
+                                                                    <td>INR 5000 will be charged as penalty. Any
+                                                                        expenses arising out of repair cost or such
+                                                                        damages will be charged to the User along with
+                                                                        the penalty</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>7</td>
+                                                                    <td>Tampering with the devices such as GPS etc.</td>
+                                                                    <td>INR 5000 plus the actual cost of the repair or
+                                                                        the fitment will be charged from the User.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>8</td>
+                                                                    <td>Failure to return the car at the scheduled
+                                                                        location</td>
+                                                                    <td>You will be charged INR 1500 plus the full
+                                                                        hourly rate and the late fees until the vehicle
+                                                                        is returned to the correct location.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>9</td>
+                                                                    <td>In case the vehicle is dropped outside city
+                                                                        limits of the pickup location</td>
+                                                                    <td>Actual cost for transporting the car to the
+                                                                        correct location plus INR 1500 plus the full
+                                                                        hourly rate and the late fees until the vehicle
+                                                                        is returned to the correct location.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>10</td>
+                                                                    <td>Delay in returning of car beyond the scheduled
+                                                                        time</td>
+                                                                    <td>Please refer to clause IV (5)</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>11</td>
+                                                                    <td>Extension of car usage beyond the scheduled time
+                                                                    </td>
+                                                                    <td>Please refer to clause IV (5)</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>12</td>
+                                                                    <td>Loss of car accessories such as [Baby seat,
+                                                                        Tablet etc.]</td>
+                                                                    <td>INR 5000 or actual cost of the accessory.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>13</td>
+                                                                    <td>Unclean Car or littering /dirtying the car</td>
+                                                                    <td>Unclean cars will attract cleaning charge of Rs.
+                                                                        750/- for a minor cleaning &amp; a charge of Rs.
+                                                                        1250/- for a major cleaning as penalty.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>14</td>
+                                                                    <td>Causing any damage to the car</td>
+                                                                    <td>The User will be obligated to pay the repair
+                                                                        cost and the standard insurance deductible along
+                                                                        with any losses. In the event the user is found
+                                                                        to violate ORIX T &amp; C</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>15</td>
+                                                                    <td>Failure to return car keys</td>
+                                                                    <td>A fine of Rs. 2500/- will be charged plus
+                                                                        replacement cost incurred will be charged to the
+                                                                        User</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>16</td>
+                                                                    <td>Failure to return the original car documents
+                                                                    </td>
+                                                                    <td>A fine of INR 10,000 will be charged along with
+                                                                        the actual charges incurred for
+                                                                        re-documentation.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>17</td>
+                                                                    <td>Incorrect KYC documents produced at the time of
+                                                                        picking up the car.</td>
+                                                                    <td>For Daily Rentals: 1 day rental will be charged
+                                                                        For Daily Rental: In case of subscription Rs.
+                                                                        4000/- will be charged.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>18</td>
+                                                                    <td>The User does not turn up to pick up the car/No
+                                                                        Show</td>
+                                                                    <td>For Daily Rentals: 1 day rental will be charged
+                                                                        For Daily rental Entire contracted Hire Charges
+                                                                        for the trip shall be charged.<br>For
+                                                                        Subscription bookings, one day rental along with
+                                                                        security deposit will be forfeited as a penalty.
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>19</td>
+                                                                    <td>Driving under the influence of alcohol or drugs
+                                                                        or is suffering from any disease or disability,
+                                                                        which may cause his / her driving ability or
+                                                                        which is likely to cause a source of danger to
+                                                                        the public and/or to the Vehicle.</td>
+                                                                    <td>Complete Security Deposit will be forfeited over
+                                                                        and above the actual damage, cost and loss
+                                                                        incurred.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>20</td>
+                                                                    <td>Any intentional damage such as continuing to
+                                                                        drive after accident or under extreme conditions
+                                                                        or rash driving etc.</td>
+                                                                    <td>Complete Security Deposit will be forfeited over
+                                                                        and above the actual damage cost incurred.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>21</td>
+                                                                    <td>The User not driving himself</td>
+                                                                    <td>Complete Security Deposit will be forfeited over
+                                                                        and above the actual damage cost if incurred.
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>22</td>
+                                                                    <td>Cancellation</td>
+                                                                    <td>Please refer clause III (14)</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>23</td>
+                                                                    <td>Fuel</td>
+                                                                    <td>We offer the cars with fuel in tank and accept
+                                                                        it back with the same quantity of fuel in tank
+                                                                        as provided to the Hirer at the time of handing
+                                                                        over the possession of the Vehicle. However, in
+                                                                        case the quantity of fuel at the time of
+                                                                        returning the Vehicle to ORIX is less than the
+                                                                        fuel level at time of rental start date and
+                                                                        time, a 10% refuelling charge will be levied
+                                                                        over and above the differential refuelling cost.
+                                                                        The charges for differential refuelling along
+                                                                        with service charge shall be deducted from the
+                                                                        Security Deposit.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>24</td>
+                                                                    <td>Carrying number of persons (excluding the
+                                                                        driver) exceeding the permissible number as
+                                                                        specified in Motor Vehicle Act, 1988 and Rules
+                                                                        framed thereunder (the Act)</td>
+                                                                    <td>Rs. 5000/- will be charged as penalty .The user
+                                                                        will be held liable for any legal action arising
+                                                                        out of these activities</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>25</td>
+                                                                    <td>If ferrying passengers or any goods for
+                                                                        consideration or reward whether expressed or
+                                                                        implied.</td>
+                                                                    <td>Rs. 5000/- will be charged as penalty .The user
+                                                                        will be held liable for any legal action arising
+                                                                        out of these activities</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>26</td>
+                                                                    <td>Carrying pets or any type of animals</td>
+                                                                    <td>A charge of Rs.1250/- will be levied as penalty
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>27</td>
+                                                                    <td>Pick up &amp; Drop facility of Car</td>
+                                                                    <td>The pick up or drop facility will be charged
+                                                                        starting from Rs. 300/- for pick up and INR 300
+                                                                        for drop.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>28</td>
+                                                                    <td>Extra Chauffeur charges in case of a S/D car is
+                                                                        taken with a chauffeur</td>
+                                                                    <td>Rs. 100/- per hour with a minimum billing of 8
+                                                                        hrs.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>29</td>
+                                                                    <td>Smoking</td>
+                                                                    <td>Rs. 1000/- + applicable damages to vehicle
+                                                                        interiors</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <h4>DAMAGE CHARGES :</h4>
+                                                        <table class="table table-bordered table-responsive"
+                                                            cellspacing="{0}">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>SR.NO.</td>
+                                                                    <td colspan="{6}">VARIANT DETAILS</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>A</td>
+                                                                    <td colspan="{6}">Maruti Alto,Mahindra E20, Tata
+                                                                        Nano, Ford figo,Hyundai I 10 Grand, Maruti Swift
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>B</td>
+                                                                    <td colspan="{6}">Vento, Sunny, City, Amaze, Polo, I
+                                                                        20, Etios , Ciaz , Jazz, Aspire , Baleno, Kuv
+                                                                        100,Dzire</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>C</td>
+                                                                    <td colspan="{6}">Ecosport, Duster, S Cross, Creta ,
+                                                                        Brezza, Kick, Xuv 300,Venue, TUV 300, Kia,
+                                                                        Nexon,Ertiga</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>D</td>
+                                                                    <td colspan="{6}">XUV 500, Innova Crysta,
+                                                                        Jeep,Corolla Altis, Accord,Hexa, Marazzo,Scorpio
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>E</td>
+                                                                    <td colspan="{6}">Endeavour, Fortuner, Harrier</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>SR.NO.</td>
+                                                                    <td>PANEL NAME</td>
+                                                                    <td>A</td>
+                                                                    <td>B</td>
+                                                                    <td>C</td>
+                                                                    <td>D</td>
+                                                                    <td>E</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>1</td>
+                                                                    <td>Front bumper</td>
+                                                                    <td>2500</td>
+                                                                    <td>2500</td>
+                                                                    <td>3000</td>
+                                                                    <td>4000</td>
+                                                                    <td>4500</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2</td>
+                                                                    <td>Bonnet Hood</td>
+                                                                    <td>2500</td>
+                                                                    <td>2500</td>
+                                                                    <td>3000</td>
+                                                                    <td>3500</td>
+                                                                    <td>5000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3</td>
+                                                                    <td>Fender</td>
+                                                                    <td>2500</td>
+                                                                    <td>2500</td>
+                                                                    <td>3000</td>
+                                                                    <td>3500</td>
+                                                                    <td>5000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>4</td>
+                                                                    <td>Door</td>
+                                                                    <td>2500</td>
+                                                                    <td>2500</td>
+                                                                    <td>3000</td>
+                                                                    <td>3500</td>
+                                                                    <td>5000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>5</td>
+                                                                    <td>Quarter Panel</td>
+                                                                    <td>2500</td>
+                                                                    <td>2500</td>
+                                                                    <td>3000</td>
+                                                                    <td>3500</td>
+                                                                    <td>5000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>6</td>
+                                                                    <td>Boot Lid</td>
+                                                                    <td>2500</td>
+                                                                    <td>2500</td>
+                                                                    <td>3000</td>
+                                                                    <td>3500</td>
+                                                                    <td>5000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>7</td>
+                                                                    <td>Rear Bumper</td>
+                                                                    <td>2500</td>
+                                                                    <td>2500</td>
+                                                                    <td>3000</td>
+                                                                    <td>3500</td>
+                                                                    <td>5000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>8</td>
+                                                                    <td>Roof</td>
+                                                                    <td>2500</td>
+                                                                    <td>2500</td>
+                                                                    <td>3500</td>
+                                                                    <td>4000</td>
+                                                                    <td>5000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>9</td>
+                                                                    <td>Rear View Mirror</td>
+                                                                    <td>2500</td>
+                                                                    <td>2500</td>
+                                                                    <td>3500</td>
+                                                                    <td>4000</td>
+                                                                    <td>5000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>10</td>
+                                                                    <td>Running Board</td>
+                                                                    <td>2500</td>
+                                                                    <td>2500</td>
+                                                                    <td>3000</td>
+                                                                    <td>3500</td>
+                                                                    <td>4500</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>11</td>
+                                                                    <td>A Pillar</td>
+                                                                    <td>1500</td>
+                                                                    <td>1500</td>
+                                                                    <td>1500</td>
+                                                                    <td>1500</td>
+                                                                    <td>2000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>12</td>
+                                                                    <td>Wheel Caps</td>
+                                                                    <td>1500</td>
+                                                                    <td>1500</td>
+                                                                    <td>2000</td>
+                                                                    <td>2000</td>
+                                                                    <td>3500</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>13</td>
+                                                                    <td>Tails Lamp</td>
+                                                                    <td>3500</td>
+                                                                    <td>3500</td>
+                                                                    <td>4000</td>
+                                                                    <td>4500</td>
+                                                                    <td>11000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>14</td>
+                                                                    <td>Fog Lamp</td>
+                                                                    <td>2000</td>
+                                                                    <td>2000</td>
+                                                                    <td>3000</td>
+                                                                    <td>4000</td>
+                                                                    <td>11000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>15</td>
+                                                                    <td>Number Plate</td>
+                                                                    <td>1000</td>
+                                                                    <td>1000</td>
+                                                                    <td>1000</td>
+                                                                    <td>1000</td>
+                                                                    <td>1000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>16</td>
+                                                                    <td>Roof Mirror</td>
+                                                                    <td>1500</td>
+                                                                    <td>1500</td>
+                                                                    <td>2500</td>
+                                                                    <td>3500</td>
+                                                                    <td>6000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>17</td>
+                                                                    <td>Sunvisor Roof</td>
+                                                                    <td>1000</td>
+                                                                    <td>1000</td>
+                                                                    <td>2000</td>
+                                                                    <td>2500</td>
+                                                                    <td>3500</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>18</td>
+                                                                    <td>Seat Cover</td>
+                                                                    <td>2000</td>
+                                                                    <td>2000</td>
+                                                                    <td>2500</td>
+                                                                    <td>4500</td>
+                                                                    <td>4500</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>19</td>
+                                                                    <td>Foot Mat</td>
+                                                                    <td>1200</td>
+                                                                    <td>1200</td>
+                                                                    <td>1500</td>
+                                                                    <td>2500</td>
+                                                                    <td>4000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>20</td>
+                                                                    <td>Tool Kit Box</td>
+                                                                    <td>2500</td>
+                                                                    <td>2500</td>
+                                                                    <td>4000</td>
+                                                                    <td>4500</td>
+                                                                    <td>8000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>21</td>
+                                                                    <td>Door Sticker</td>
+                                                                    <td>1000</td>
+                                                                    <td>1000</td>
+                                                                    <td>1000</td>
+                                                                    <td>1000</td>
+                                                                    <td>1000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>22</td>
+                                                                    <td>Head Light</td>
+                                                                    <td>3500</td>
+                                                                    <td>3500</td>
+                                                                    <td>4000</td>
+                                                                    <td>4500</td>
+                                                                    <td>10000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>23</td>
+                                                                    <td>Music System*( Repair Cost )</td>
+                                                                    <td>1000</td>
+                                                                    <td>1000</td>
+                                                                    <td>1000</td>
+                                                                    <td>1000</td>
+                                                                    <td>1000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>24</td>
+                                                                    <td>Head Rest / Arm Rest</td>
+                                                                    <td>2000</td>
+                                                                    <td>2000</td>
+                                                                    <td>3000</td>
+                                                                    <td>4000</td>
+                                                                    <td>6000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>SR.NO.</td>
+                                                                    <td>REMOVE AND FIT SCHEDULE</td>
+                                                                    <td>A</td>
+                                                                    <td>B</td>
+                                                                    <td>C</td>
+                                                                    <td>D</td>
+                                                                    <td>E</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>1</td>
+                                                                    <td>Rear View Mirror</td>
+                                                                    <td>500</td>
+                                                                    <td>500</td>
+                                                                    <td>1000</td>
+                                                                    <td>1000</td>
+                                                                    <td>1500</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2</td>
+                                                                    <td>Front Windshield</td>
+                                                                    <td>2500</td>
+                                                                    <td>3000</td>
+                                                                    <td>3500</td>
+                                                                    <td>4500</td>
+                                                                    <td>6000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3</td>
+                                                                    <td>Rear Windshield</td>
+                                                                    <td>2500</td>
+                                                                    <td>3000</td>
+                                                                    <td>3500</td>
+                                                                    <td>4500</td>
+                                                                    <td>6000</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer-box">
+        <div class="container">
+            <footer class="py-3 my-4">
+                <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                    <li class="nav-item"><a href="main.html" class="nav-link px-2 text-body-secondary">Home</a></li>
+                    <li class="nav-item"><a href="pricing.html" class="nav-link px-2 text-body-secondary">Pricing</a>
+                    </li>
+                    <li class="nav-item"><a href="faq.html" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+                    <li class="nav-item"><a href="contact-us.html" class="nav-link px-2 text-body-secondary">Contact
+                            Us</a></li>
+                </ul>
+                <div class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4">
+                    <p class="col-md-4 mb-0 text-body-secondary">© 2024 Company, Inc</p>
+
+                    <a href="#"
+                        class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                        <img src="imgs/Final/logo.png" alt="..." class="bi me-2" width="40" height="32">
+                    </a>
+
+                    <ul class="nav col-md-4 justify-content-end">
+                        <li class="ms-3">
+                            <a class="text-body-secondary" href="#">
+                                <img src="imgs/Social/linkedin-24.png" class="bi" width="24" height="24">
+                            </a>
+                        </li>
+                        <li class="ms-3">
+                            <a class="text-body-secondary" href="#">
+                                <img src="imgs/Social/twitter-24.png" class="bi" width="24" height="24">
+                            </a>
+                        </li>
+                        <li class="ms-3">
+                            <a class="text-body-secondary" href="#">
+                                <img src="imgs/Social/instagram-24.png" class="bi" width="24" height="24">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </footer>
+        </div>
+    </footer>
+    <script src="../Server/utility.js"></script>
+</body>
+
+</html>
